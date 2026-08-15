@@ -7,6 +7,8 @@ export interface IApi {
 
 export type TPayment = 'card' | 'cash';
 
+export type TPaymentWithEmpty = TPayment | '';
+
 export interface IProduct {
     id: string;
     description: string;
@@ -17,11 +19,13 @@ export interface IProduct {
 }
 
 export interface IBuyer {
-    payment: TPayment;
+    payment: TPaymentWithEmpty;
     email: string;
     phone: string;
     address: string;
 }
+
+export type TBuyerErrors = Partial<Record<keyof IBuyer, string>>;
 
 export interface IOrderData {
     payment: TPayment;

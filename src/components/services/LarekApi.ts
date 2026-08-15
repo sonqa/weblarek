@@ -1,10 +1,9 @@
-import { Api } from '../base/api';
-import { IOrderData, IOrderResponse, IProductsResponse } from '../../types';
+import { IApi, IOrderData, IOrderResponse, IProductsResponse } from '../../types';
 
 export class LarekApi {
-    private _api: Api;
+    private _api: IApi;
 
-    constructor(api: Api) {
+    constructor(api: IApi) {
         this._api = api;
     }
 

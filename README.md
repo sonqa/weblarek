@@ -97,4 +97,75 @@ Presenter - презентер содержит основную логику п
 `on<T extends object>(event: EventName, callback: (data: T) => void): void` - подписка на событие, принимает название события и функцию обработчик.  
 `emit<T extends object>(event: string, data?: T): void` - инициализация события. При вызове события в метод передается название события и объект с данными, который будет использован как аргумент для вызова обработчика.  
 `trigger<T extends object>(event: string, context?: Partial<T>): (data: T) => void` - возвращает функцию, при вызове которой инициализируется требуемое в параметрах событие с передачей в него данных из второго параметра.
+## Модели данных
+
+### Класс ProductsModel
+Хранение и управление каталогом товаров.
+
+Поля:
+- `_items: IProduct[]` - массив всех товаров
+- `_selectedProduct: IProduct | null` - выбранный товар
+
+Методы:
+- `setItems(items: IProduct[]): void`
+- `getItems(): IProduct[]`
+- `getProductById(id: string): IProduct | undefined`
+- `setSelectedProduct(product: IProduct): void`
+- `getSelectedProduct(): IProduct | null`
+
+### Класс CartModel
+Управление корзиной покупателя.
+
+Поля:
+- `_items: IProduct[]` - товары в корзине
+
+Методы:
+- `getItems(): IProduct[]`
+- `addItem(product: IProduct): void`
+- `removeItem(productId: string): void`
+- `clear(): void`
+- `getTotalPrice(): number`
+- `getCount(): number`
+- `hasProduct(productId: string): boolean`
+
+### Класс BuyerModel
+Хранение и валидация данных покупателя.
+
+Поля:
+- `_data: IBuyer` - данные покупателя
+
+Методы:
+- `setData(data: Partial<IBuyer>): void`
+- `getData(): IBuyer`
+- `clear(): void`
+- `validate(): TBuyerErrors`
+
+## Слой коммуникации
+
+### Класс LarekApi
+Взаимодействие с сервером.
+
+Конструктор: принимает `IApi`
+
+Поля:
+- `_api: IApi` - объект для HTTP-запросов
+
+Методы:
+- `getProducts(): Promise<IProductsResponse>`
+- `createOrder(orderData: IOrderData): Promise<IOrderResponse>`
+
+## Типы данных
+
+- `IProduct` - товар
+- `IBuyer` - покупатель
+- `TPayment` - способы оплаты ('card' | 'cash')
+- `TBuyerErrors` - ошибки валидации
+- `IOrderData` - данные заказа
+- `IOrderResponse` - ответ сервера
+- `IProductsResponse` - ответ сервера с товарами
+
+## Архитектура
+
+Используется паттерн MVP с инверсией зависимостей:
+- `LarekApi` зависит от `IApi`, а не от конкретного `Api`
 

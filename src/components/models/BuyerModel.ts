@@ -1,22 +1,32 @@
-import { IBuyer } from '../../types';
+import { IBuyer, TBuyerErrors } from '../../types';
 
 export class BuyerModel {
-    private _data: Partial<IBuyer> = {};
+    private _data: IBuyer = {
+        payment: '',
+        email: '',
+        phone: '',
+        address: ''
+    };
 
     setData(data: Partial<IBuyer>): void {
         this._data = { ...this._data, ...data };
     }
 
     getData(): IBuyer {
-        return this._data as IBuyer;
+        return this._data;
     }
 
     clear(): void {
-        this._data = {};
+        this._data = {
+            payment: '',
+            email: '',
+            phone: '',
+            address: ''
+        };
     }
 
-    validate(): Partial<Record<keyof IBuyer, string>> {
-        const errors: Partial<Record<keyof IBuyer, string>> = {};
+    validate(): TBuyerErrors {
+        const errors: TBuyerErrors = {};
 
         if (!this._data.payment) {
             errors.payment = 'Не выбран способ оплаты';

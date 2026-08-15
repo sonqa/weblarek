@@ -5,10 +5,11 @@ import { BuyerModel } from './components/models/BuyerModel';
 import { LarekApi } from './components/services/LarekApi';
 import { Api } from './components/base/Api';
 import { apiProducts } from './utils/data';
+import { API_URL } from './utils/constants';
 
 console.log('=== НАЧАЛО ТЕСТИРОВАНИЯ ===');
 
-const baseApi = new Api(import.meta.env.VITE_API_ORIGIN);
+const baseApi = new Api(API_URL);
 const larekApi = new LarekApi(baseApi);
 const productsModel = new ProductsModel();
 const cartModel = new CartModel();
