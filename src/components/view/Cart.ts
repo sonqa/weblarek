@@ -16,7 +16,6 @@ export class Cart extends Component<{ items: HTMLElement[]; totalPrice: number; 
 
         if (this._checkoutButton) {
             this._checkoutButton.addEventListener('click', () => {
-                console.log('🛒 Нажата кнопка Оформить');
                 this._events.emit('cart:checkout');
             });
         }
@@ -49,11 +48,7 @@ export class Cart extends Component<{ items: HTMLElement[]; totalPrice: number; 
         }
     }
 
-    render(data: { items: HTMLElement[]; totalPrice: number; isEmpty: boolean }): HTMLElement {
-        this.items = data.items;
-        this.totalPrice = data.totalPrice;
-        this.isEmpty = data.isEmpty;
-        this.canCheckout = !data.isEmpty;
+    render(): HTMLElement {
         return this.container;
     }
 }

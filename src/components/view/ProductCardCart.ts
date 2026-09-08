@@ -1,38 +1,22 @@
-import { Component } from '../base/Component';
+import { ProductCard } from './ProductCard';
 
-export class ProductCardCart extends Component<{ id: string; title: string; price: number }> {
-    private _title: HTMLElement;
-    private _price: HTMLElement;
+export class ProductCardCart extends ProductCard<{ 
+    title: string; 
+    price: number; 
+    index: number;
+}> {
     private _deleteButton: HTMLButtonElement;
     private _indexElement?: HTMLElement;
 
     constructor(container: HTMLElement) {
         super(container);
-        this._title = container.querySelector('.card__title') as HTMLElement;
-        this._price = container.querySelector('.card__price') as HTMLElement;
         this._deleteButton = container.querySelector('.card__button') as HTMLButtonElement;
         this._indexElement = container.querySelector('.basket__item-index') as HTMLElement || undefined;
     }
 
-    set id(value: string) {
-        this.container.dataset.id = value;
-    }
-
-    set setIndex(value: number) {
+    set index(value: number) {
         if (this._indexElement) {
             this._indexElement.textContent = String(value);
-        }
-    }
-
-    set title(value: string) {
-        if (this._title) {
-            this.setText(this._title, value);
-        }
-    }
-
-    set price(value: number) {
-        if (this._price) {
-            this.setText(this._price, `${value} синапсов`);
         }
     }
 
@@ -45,10 +29,10 @@ export class ProductCardCart extends Component<{ id: string; title: string; pric
         }
     }
 
-    render(data: { id: string; title: string; price: number }): HTMLElement {
-        this.id = data.id;
+    render(data: { title: string; price: number; index: number }): HTMLElement {
         this.title = data.title;
         this.price = data.price;
+        this.index = data.index;
         return this.container;
     }
 }

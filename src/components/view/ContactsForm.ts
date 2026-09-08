@@ -12,51 +12,34 @@ export class ContactsForm extends Form<IBuyer> {
         this._phoneInput = container.querySelector('input[name="phone"]') as HTMLInputElement;
 
         if (this._emailInput) {
-            this._emailInput.addEventListener('input', () => this.checkValidity());
+            this._emailInput.addEventListener('input', () => {
+                this._events.emit('contacts:emailChange', { email: this._emailInput.value });
+            });
         }
         if (this._phoneInput) {
-            this._phoneInput.addEventListener('input', () => this.checkValidity());
+            this._phoneInput.addEventListener('input', () => {
+                this._events.emit('contacts:phoneChange', { phone: this._phoneInput.value });
+            });
         }
     }
 
     set email(value: string) {
         if (this._emailInput) {
             this._emailInput.value = value;
-            this.checkValidity();
         }
     }
 
     set phone(value: string) {
         if (this._phoneInput) {
             this._phoneInput.value = value;
-            this.checkValidity();
         }
-    }
-
-    private checkValidity(): void {
-        const isValid = this._emailInput?.value.trim() !== '' && this._phoneInput?.value.trim() !== '';
-        this.valid = isValid;
     }
 
     protected onSubmit(): void {
-        console.log('📝 Форма контактов отправлена');
-        if (this._emailInput?.value.trim() && this._phoneInput?.value.trim()) {
-            this._events.emit('contacts:submit', {
-                email: this._emailInput.value.trim(),
-                phone: this._phoneInput.value.trim(),
-                address: '',
-                payment: ''
-            } as IBuyer);
-        }
+        this._events.emit('contacts:submit');
     }
 
-    render(data?: Partial<IBuyer>): HTMLElement {
-        if (data?.email !== undefined) {
-            this.email = data.email;
-        }
-        if (data?.phone !== undefined) {
-            this.phone = data.phone;
-        }
+    render(): HTMLElement {
         return this.container;
     }
 }

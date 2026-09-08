@@ -12,17 +12,10 @@ export class OrderSuccess extends Component<{ total: number }> {
         this._message = container.querySelector('.order-success__description') as HTMLElement;
         this._closeButton = container.querySelector('.order-success__close') as HTMLButtonElement;
 
-        console.log('🔍 OrderSuccess constructor');
-        console.log('🔍 _closeButton:', this._closeButton);
-
         if (this._closeButton) {
-            console.log('✅ Кнопка найдена, добавляем обработчик');
             this._closeButton.addEventListener('click', () => {
-                console.log('🔄 Закрытие модалки после успешного заказа');
-                this._events.emit('modal:close');
+                this._events.emit('success:close');
             });
-        } else {
-            console.warn('⚠️ .order-success__close не найдена!');
         }
     }
 
